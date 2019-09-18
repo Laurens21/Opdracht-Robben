@@ -3,39 +3,42 @@
 {% block title %}Product index{% endblock %}
 
 {% block body %}
-    <h1>Product index</h1>
+    <style>
+        .styling{
+            margin:10px; display: flex; justify-content: center; max-width: 33.33%; flex-direction:column;
+            background-color: white;
+            color: black; 
+            border: 1px solid black;
+        }
+        .styling:hover{
+            box-shadow: 0px 0px 16px 0px white;
+        }
+    </style>
+
+    <h1 style="text-align: center">Products</h1>
 
     <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Code</th>
-                <th>Taxcode</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+        <tbody style="display: flex; flex-wrap:wrap">
         {% for product in products %}
-            <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.name }}</td>
+            <tr class="styling">
+                <td style="text-align: center; background-color: #212529; color: white; border-top:none">{{ product.name }}</td>
+                <td><a href="{{ path('product_show', {'id': product.id}) }}"><img src={{ vich_uploader_asset(product, 'imageFile') }} width="300px" height="300px"></a></td>
                 <td>{{ product.description }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.code }}</td>
-                <td>{{ product.taxcode }}</td>
+                <td>Price: € {{ product.price }}</td>
+                <td>Product code: {{ product.code }}</td>
                 {% if is_granted('ROLE_ADMIN') %}
-                <td>
-                    <a class="btn btn-primary" href="{{ path('product_show', {'id': product.id}) }}">show</a>
-                    <a class="btn btn-warning" href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
+                <td style="display: flex; justify-content:center; width: 100%">
+                    <a style="margin-right: 5px" class="btn btn-primary" href="{{ path('product_show', {'id': product.id}) }}">show</a>
+                    <a style="margin-left: 5px" class="btn btn-warning" href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
+                </td>
+                {% elseif is_granted('ROLE_CUSTOMER') %}
+                <td style="display: flex; justify-content:center; width: 100%">
+                    <a class="btn btn-success" href="{{ path('product_add', {'id': product.id}) }}">add to cart</a>
                 </td>
                 {% else %}
-                <td>
-                    <a class="btn btn-success" href="{{ path('product_add', {'id': product.id}) }}">add to cart</a>
-                    <a class="btn btn-danger" href="{{ path('product_del', {'id': product.id}) }}">delete from cart</a>                                    
-                </td>
+                <td style="display: flex; justify-content:center; width: 100%">
+                        <a class="btn btn-success" href="{{ path('fos_user_registration_register') }}">add to cart</a>
+                    </td>
                 {% endif %}
             </tr>
         {% else %}
@@ -46,6 +49,8 @@
         </tbody>
     </table>
     {% if is_granted('ROLE_ADMIN') %}
-    <a class="btn btn-success" href="{{ path('product_new') }}">Create new</a>
+    <div style="display: flex; justify-content:center; width: 100%">
+        <a class="btn btn-success" href="{{ path('product_new') }}">Create new</a>
+    </div>
     {% endif %}
 {% endblock %}

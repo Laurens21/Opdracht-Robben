@@ -56,7 +56,7 @@ class CartController extends AbstractController
                 ->setBody(
                     $this->renderView(
                         'emails/checkout.html.twig',
-                        ["Naam" => $formData["Naam"], "Products" => $Products]
+                        ["Name" => $formData["Name"], "Products" => $Products]
                     ),
                     'text/html'
                 )

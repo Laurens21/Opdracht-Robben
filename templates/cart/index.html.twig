@@ -4,7 +4,7 @@
 
 {% block body %}
 <div class="example-wrapper">
-        <h1>Winkelwagen</h1>
+        <h1>Shopping cart</h1>
             <table class="table">
                 <tr>
                     <th>Name</th>
@@ -14,7 +14,7 @@
                     <th>Total Price</th>
                 </tr>
                 {% for product in Products %}
-                <tr>
+                <tr style="border-bottom: 1px solid white">
                     <td>
                         {{ product.Product.Name }}
                     </td>
@@ -38,9 +38,12 @@
                 {% endfor %}
             </table>
             {% if Products != null %}
-            <div style="display: flex; justify-content:flex-end">
-                    <a class="btn btn-secondary" href="{{ path('checkout') }}">Checkout</a>
-                </div>
+            <div style="display: flex; justify-content:center; width: 100%">
+                
+            </div>
+            <div style="display: flex; justify-content:center; width: 100%">
+                <a class="btn btn-secondary" href="{{ path('checkout') }}">Checkout</a>
+            </div>
             {% endif %}
 </div>
 {% endblock %}
